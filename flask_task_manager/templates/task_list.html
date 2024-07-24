@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Your Tasks</h2>
+    <a href="{% url 'task_create' %}">Add New Task</a>
+    <ul>
+        {% for task in tasks %}
+            <li>
+                <a href="{% url 'task_form' task.id %}">{{ task.title }}</a>
+                <form method="post" action="{% url 'task_delete' task.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        {% empty %}
+            <li>No tasks available.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
